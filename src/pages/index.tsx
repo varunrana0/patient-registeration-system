@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import RegisterPatients from "@/features/patientManagement/RegisterPatient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +20,9 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">
           Patient Management System
         </h1>
+
+        {/*  Register Patients to the system */}
+        <RegisterPatients />
       </main>
     </div>
   );
