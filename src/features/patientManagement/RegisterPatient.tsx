@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +27,9 @@ import {
   PATIENTS_SYNC_CHANNEL,
 } from "./constant";
 import { toast } from "sonner";
-import { registerPatient } from "./utils";
+import PatientsTable from "./PatientTable";
+import { type Patient } from "./types";
+import { getAllPatients, registerPatient } from "./utils";
 
 const ErrorMessage = ({ message, id }: { message?: string; id: string }) => {
   return message ? (
@@ -38,8 +40,9 @@ const ErrorMessage = ({ message, id }: { message?: string; id: string }) => {
 };
 
 const RegisterPatients = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [channel, setChannel] = useState<BroadcastChannel | null>(null);
+  const [patients, setPatients] = useState<Patient[]>([]);
 
   const {
     register,
@@ -52,12 +55,22 @@ const RegisterPatients = () => {
   });
 
   useEffect(() => {
+    const fetchPatients = async () => {
+      const storedPatients = await getAllPatients();
+      setPatients(storedPatients);
+    };
+
+    fetchPatients();
+  }, []);
+
+  useEffect(() => {
     const broadCastChannel = new BroadcastChannel(PATIENTS_SYNC_CHANNEL);
     setChannel(broadCastChannel);
 
     broadCastChannel.onmessage = async (event) => {
       if (event.data.type === NEW_PATIENT_REGISTERED) {
         console.log("New patient registered");
+        setPatients(event.data.payload);
       }
     };
   }, []);
@@ -73,7 +86,12 @@ const RegisterPatients = () => {
       );
 
       await registerPatient(data, medicalConditions, createdAt);
-      channel?.postMessage({ type: NEW_PATIENT_REGISTERED });
+      const storedPatients = await getAllPatients();
+      setPatients(storedPatients);
+      channel?.postMessage({
+        type: NEW_PATIENT_REGISTERED,
+        payload: storedPatients,
+      });
 
       reset();
       setOpen(false);
@@ -282,6 +300,10 @@ const RegisterPatients = () => {
             </form>
           </DialogContent>
         </Dialog>
+      </div>
+
+      <div>
+        <PatientsTable initialPatients={patients} />
       </div>
     </div>
   );
