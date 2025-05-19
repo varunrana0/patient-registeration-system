@@ -27,7 +27,7 @@ import {
   PATIENTS_SYNC_CHANNEL,
 } from "./constant";
 import { toast } from "sonner";
-import PatientsTable from "./PatientTable";
+import PatientsTable from "./PatientsTable";
 import { type Patient } from "./types";
 import { getAllPatients, registerPatient } from "./utils";
 
