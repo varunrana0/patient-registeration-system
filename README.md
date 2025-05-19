@@ -1,40 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🏥 Patient Registration App
 
-## Getting Started
+A modern, frontend-only Patient Registration system built with **Next.js (Pages Router)**, **TypeScript**, **ShadCN UI**, and **Pglite**. It allows you to register, view, and search patients — with real-time **cross-tab synchronization** of search input using the **BroadcastChannel API**.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- ✅ Register new patients with form validation
+- ✅ View all patients in a searchable table
+- ✅ Real-time cross-tab search synchronization
+- ✅ Fully local persistence using `pglite` (SQLite in the browser)
+- ✅ Accessible UI powered by ShadCN (Radix + TailwindCSS)
+- ✅ Built with a **modular structure** separating components, types, utilities, and logic.
+
+---
+
+## 🧠 Tech Stack
+
+| Tool                   | Purpose                          |
+| ---------------------- | -------------------------------- |
+| Next.js (Pages Router) | Routing and rendering            |
+| TypeScript             | Static typing                    |
+| ShadCN UI              | Beautiful, accessible components |
+| Tailwind CSS           | Utility-first styling            |
+| Pglite                 | SQLite embedded in browser       |
+| BroadcastChannel       | Sync search state across tabs    |
+
+---
+
+## 🛠️ Setup Instructions
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/patient-registration-app.git
+cd patient-registration-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+# or
+npm install
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 3. Run the Development Server
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+```bash
+pnpm dev
+# or
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Now open your browser and go to:
 
-## Learn More
+```
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## 🧪 Usage Instructions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Register a Patient**
 
-## Deploy on Vercel
+   - Fill out the registration form on the homepage.
+   - Click "Submit" to save data locally using `pglite`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **View Patients**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+   - All patients are listed in a table with fields like name, age, gender, contact, blood group, etc.
+   - All patients are automatically synced across all open tabs using **BroadcastChannel**.
+
+3. **Search Patients**
+
+   - Use the search input to filter patients by name, email, or contact number.
+   - The search term automatically syncs across all open tabs using **BroadcastChannel**.
+
+---
+
+## 📁 Project Structure
+
+```
+.
+├── components/
+│   └── ui/                                # Shared ShadCN components
+│       ├── alert.tsx
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── dialog.tsx
+│       ├── input.tsx
+│       ├── select.tsx
+│       ├── sonner.tsx
+│       ├── table.tsx
+│       └── textarea.tsx
+├── features/
+│   └── patientManagement/
+│       ├── constant.ts                    # Constants related to patients
+│       ├── Patient.schema.ts              # Zod schema for patient validation
+│       ├── PatientTable.tsx               # Table UI to show patient list
+│       ├── RegisterPatient.tsx            # Form to register a patient
+│       ├── types.ts                       # Patient types
+│       └── utils.ts                       # Patient-specific utilities
+├── lib/
+│   ├── db.ts                              # pglite DB setup
+│   └── utils.ts                           # General utilities
+├── pages/
+│   ├── _app.tsx                           # Custom App wrapper
+│   ├── _document.tsx                      # Custom Document for styling
+│   └── index.tsx                          # Main page - Register & view patients
+```
+
+---
+
+## 🤔 Highlights
+
+🔄 **BroadcastChannel**
+
+- Ensures seamless tab-to-tab communication:
+
+  - Typing a search term in one tab updates the filter in others.
+  - Registering a patient reflects the changes in all open tabs instantly.
+
+🌟 **ShadCN UI**
+
+- **Radix UI** for accessible, composable components.
+- **Tailwind CSS** for utility-first, responsive styling.
+
+📚 **TypeScript**
+
+- Static typing for scalable, maintainable code.
+
+🚀 **Next.js (Pages Router)**
+
+- Traditional file-based routing system with React-based flexibility.
+- Simplified app structure for frontend-only apps.
+
+📦 **Pglite**
+
+- SQLite database runs entirely in the browser.
+- Fully local persistence, no backend required.
+
+🎉 **Modularity**
+
+- Components, utilities, types, and features are well organized and isolated.
+- Makes future feature addition or refactoring a breeze.
